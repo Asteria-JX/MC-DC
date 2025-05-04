@@ -1,6 +1,6 @@
 package com.example.covdecisive.demos.web.controller;
 
-import com.example.covdecisive.demos.web.model.User;
+import com.example.covdecisive.demos.web.User;
 import com.example.covdecisive.demos.web.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,8 +17,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @ApiOperation("")
-    @GetMapping("/")
+    @ApiOperation("查询所有用户")
+    @GetMapping("/getAllUsers")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }

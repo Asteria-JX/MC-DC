@@ -28,6 +28,39 @@ public class Program {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
-    private List<Defect> defects = new ArrayList<>();
+//    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
+//    private List<Defect> defects = new ArrayList<>();
+
+    // Getters and Setters
+    public Integer getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(Integer programId) {
+        this.programId = programId;
+    }
+
+    public String getProgramName() {
+        return programName;
+    }
+
+    public void setProgramName(String programName) {
+        this.programName = programName;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -23,7 +23,40 @@ public class SourceCode {
     @Column(name = "code_content")
     private String codeContent;
 
-    @ManyToOne
-    @JoinColumn(name = "program_id", referencedColumnName = "program_id")
-    private Program program;
+    //@ManyToOne
+    //@JoinColumn(name = "program_id", referencedColumnName = "program_id")
+    private Integer programId;
+
+    // Getters and Setters
+    public Integer getCodeId() {
+        return codeId;
+    }
+
+    public void setCodeId(Integer codeId) {
+        this.codeId = codeId;
+    }
+
+    public Integer getProgramId() {
+        return programId;
+    }
+
+    public void setProgramId(Integer programId) {
+        this.programId = programId;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getCodeContent() {
+        return codeContent;
+    }
+
+    public void setCodeContent(String codeContent) {
+        this.codeContent = codeContent;
+    }
 }

@@ -1,21 +1,21 @@
 package com.example.covdecisive.demos.web.mapper;
 import java.util.List;
-
-import com.example.covdecisive.demos.web.User;
+import com.example.covdecisive.demos.web.model.User;
 import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
-    @Results({
-            @Result(property = "discipline",column ="discipline" ),
-            @Result(property = "disciplineCode",column = "disciplineCode"),
-            @Result(property = "fieldName",column = "fieldName"),
-            @Result(property = "totalQuota",column = "totalQuota"),
-            @Result(property = "recommendationQuota",column = "recommendationQuota"),
-            @Result(property = "mentor",column = "mentor"),
-            @Result(property = "course",column = "course"),
-            @Result(property = "note",column = "note"),
+
+    @Results(id = "UserMap", value = {
+            @Result(property = "userId", column = "user_id"),
+            @Result(property = "username", column = "username"),
+            @Result(property = "password", column = "password"),
+            @Result(property = "userType", column = "user_type")
     })
-    @Select("SELECT * FROM User")
+    @Select("SELECT * FROM users")
     List<User> getAllUsers();
+
+    @ResultMap("UserMap")
+    @Select("SELECT * FROM users WHERE username = #{username}")
+    User findByUsername(@Param("username") String username);
 }

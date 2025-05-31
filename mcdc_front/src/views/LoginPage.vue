@@ -64,7 +64,7 @@ const sendEmailCode = async () => {
   }
 
   try {
-    await axios.post('/api/sendEmailCode', {email});
+    await axios.post('/sendEmailCode', {email});
     Message.success('验证码已发送，请检查邮箱');
 
     countDown.value = 60;
@@ -91,18 +91,35 @@ const handleRegister = async () => {
 
   state.loading = true;
   try {
-    const res = await axios.post('/handleRegister', {username, password, email, emailCode});
+    const res = await axios.post('/handleRegister', {
+      username,
+      password,
+      confirmPassword,
+      email,
+      emailCode
+    });
+
+    console.log("✅ 注册响应对象 =", res);       // 👈 打印完整 Axios 响应
+    console.log("✅ 响应体 =", res.data);        // 👈 打印返回数据
+
     if (res.data.success) {
-      Message.success('注册成功，请登录');
+      Message.success('注册成功，已登录！');
+      // TODO: 登录后跳转逻辑
       state.isLogin = true;
     } else {
       Message.error(res.data.message || '注册失败');
     }
   } catch (err) {
+    console.error('❌ 注册请求异常 =', err);       // 👈 捕获异常并打印
+    if (err.response) {
+      console.error('📛 响应状态码:', err.response.status);
+      console.error('📛 响应内容:', err.response.data);
+    }
     Message.error('注册请求失败');
   } finally {
     state.loading = false;
   }
+
 };
 
 // ✅ 登陆验证
@@ -127,7 +144,7 @@ const handleLogin = async () => {
     if (res.data.success) {
       Message.success('登录成功');
       // TODO: 登录后跳转逻辑
-      this.$router.push("/AdminIndex");
+
     } else {
       Message.error('用户名或密码错误');
     }

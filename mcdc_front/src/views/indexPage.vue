@@ -3,12 +3,28 @@
     <a-layout>
       <a-layout-header>
         <a-space style="margin:1.5vh 0 0 2vw">
-          <a-button type="primary" style="margin-right: 10px">
-            <template #icon>
-              <icon-plus />
-            </template>
+<!--          <a-button type="primary" style="margin-right: 10px">-->
+<!--            <a-icon type="upload" @click="triggerUpload" />-->
+<!--            <input-->
+<!--                type="file"-->
+<!--                ref="fileInput"-->
+<!--                style="display: none"-->
+<!--                webkitdirectory-->
+<!--                multiple-->
+<!--                @change="handleFileUpload"-->
+<!--            />-->
+<!--          </a-button>-->
+          <a-button @click="triggerUpload" style="margin-right: 10px">
+            <a-icon type="upload" />上传
           </a-button>
-
+          <input
+              type="file"
+              ref="fileInput"
+              style="display: none"
+              webkitdirectory
+              multiple
+              @change="handleFileUpload"
+          />
           <a-button type="primary" status="success">运行</a-button>
         </a-space>
       </a-layout-header>
@@ -38,13 +54,16 @@
 </template>
 
 <script>
-import {IconPlus} from '@arco-design/web-vue/es/icon';
+
 import { ref } from 'vue';
+import axios from "axios";
+import { Message} from '@arco-design/web-vue';
 export default ({
   components: {
-    IconPlus,
+
   },
   methods: {
+
 
   },
   setup(){
@@ -52,9 +71,42 @@ export default ({
     return {
       showLine,
       treeData,
+      triggerUpload,
+      handleFileUpload
     };
   }
 });
+
+//triggerUpload写这里
+//handleFileUpload写这里
+function triggerUpload() {
+  document.querySelector('input[type="file"]').click();
+}
+
+async function handleFileUpload(event) {
+  const files = event.target.files;
+  if (!files.length) return;
+
+  const formData = new FormData();
+  const programName = prompt("请输入项目名称");
+  if (!programName) return;
+
+  formData.append("programName", programName);
+  for (let file of files) {
+    formData.append("files", file, file.webkitRelativePath);
+  }
+
+  try {
+    await axios.post('/uploadProject', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    });
+    Message.success('上传成功！');
+    location.reload(); // 或调用 vm.$refs.tree.loadFileTree()
+  } catch (e) {
+    Message.error('上传失败');
+  }
+}
+
 
 const treeData = [
   {

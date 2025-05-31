@@ -23,6 +23,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailCodeController emailCodeController;
+
     @ApiOperation("查询所有用户")
     @GetMapping("/getAllUsers")
     public List<User> getAllUsers() {
@@ -47,4 +50,50 @@ public class UserController {
         }
     }
 
+
+    @PostMapping("/handleRegister")
+    @ApiOperation("用户注册")
+    public ResponseEntity<?> handleRegister(@RequestBody Map<String, String> body) {
+        String username = body.get("username");
+        String password = body.get("password");
+        String confirmPassword = body.get("confirmPassword");
+        String email = body.get("email");
+        String emailCode = body.get("emailCode");
+
+        // 两次密码不一致
+//        if (!password.equals(confirmPassword)) {
+//            return ResponseEntity.status(400).body(Map.of("success", false, "message", "两次密码不一致"));
+//        }
+
+        // 验证码错误或过期
+        if (!emailCodeController.verifyCode(email, emailCode)) {
+            return ResponseEntity.status(400).body(Map.of("success", false, "message", "验证码错误或过期"));
+        }
+
+        // 注册新用户
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setUserType(User.UserType.普通用户);
+
+        boolean success = userService.insertUser(user);
+        if (!success) {
+            return ResponseEntity.status(409).body(Map.of("success", false, "message", "用户名已存在"));
+        }
+
+        return ResponseEntity.ok(Map.of("success", true));
+    }
+
+
+    @ApiOperation("删除指定用户")
+    @PostMapping("/deleteUser/{user_id}")
+    public void deleteUser(@PathVariable("user_id") int user_id) {
+        userService.deleteUser(user_id);
+    }
+
+    @ApiOperation("添加新用户")
+    @PostMapping("/insertUser/{username}/{password}")
+    public void insertUser(@PathVariable("username") String username, @PathVariable("password") String password) {
+        userService.insertUser1(username, password);
+    }
 }

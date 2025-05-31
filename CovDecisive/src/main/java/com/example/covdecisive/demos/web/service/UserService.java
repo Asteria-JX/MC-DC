@@ -23,4 +23,19 @@ public class UserService {
         }
         return null;
     }
+
+    public boolean insertUser(User user) {
+        if (userMapper.findByUsername(user.getUsername()) != null) {
+            return false; // 用户名已存在
+        }
+        return userMapper.insertUser(user) > 0;
+    }
+
+    public void deleteUser(Integer id) {
+        userMapper.deleteUser(id);
+    }
+
+    public void insertUser1(String username, String password) {
+        userMapper.insertUser1(username, password);
+    }
 }

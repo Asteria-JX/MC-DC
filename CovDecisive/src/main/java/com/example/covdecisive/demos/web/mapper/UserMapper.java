@@ -18,4 +18,15 @@ public interface UserMapper {
     @ResultMap("UserMap")
     @Select("SELECT * FROM users WHERE username = #{username}")
     User findByUsername(@Param("username") String username);
+
+    @Insert("INSERT INTO users (username, password, user_type) VALUES (#{username}, #{password}, #{userType})")
+    int insertUser(User user);
+
+    @Delete("delete from users where user_id=#{user_id}")
+    void deleteUser(@Param("user_id") int userId);
+
+    @Insert("insert into users(username, password, user_type) values (#{username}, #{password}, '普通用户')")
+    void insertUser1(@Param("username") String username, @Param("password") String password);
+
+
 }

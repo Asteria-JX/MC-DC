@@ -27,6 +27,7 @@ public class ProgramController {
 
     @GetMapping("/all")
     public List<Program> getAllPrograms() {
+        //System.out.println(programService.getAll());
         return programService.getAll();
     }
 

@@ -28,8 +28,8 @@ public class Program {
     @Column(name = "description")
     private String description;
 
-//    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
-//    private List<Defect> defects = new ArrayList<>();
+    //@OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
+    //private List<Defect> defects = new ArrayList<>();
 
     // Getters and Setters
     public Integer getProgramId() {

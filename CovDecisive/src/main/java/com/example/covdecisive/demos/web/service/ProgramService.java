@@ -11,7 +11,7 @@ public class ProgramService {
     private ProgramMapper programMapper;
 
     public List<Program> getAll() {
-        return programMapper.selectAll();
+        return programMapper.getAll();
     }
 
     public void insert(Program program) {

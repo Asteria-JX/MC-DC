@@ -24,7 +24,7 @@ public class SourceCode {
     private String codeContent;
 
     //@ManyToOne
-    //@JoinColumn(name = "program_id", referencedColumnName = "program_id")
+    //@Column(name = "program_id")
     private Integer programId;
 
     // Getters and Setters

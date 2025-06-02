@@ -28,10 +28,21 @@ public class Program {
     @Column(name = "description")
     private String description;
 
+    @Column(name="user_id")
+    private Integer user_id;
+
     //@OneToMany(mappedBy = "program", cascade = CascadeType.ALL)
     //private List<Defect> defects = new ArrayList<>();
 
     // Getters and Setters
+    public Integer getUserId(){
+        return user_id;
+    }
+
+    public void setUserId(Integer user_id) {
+        this.user_id = user_id;
+    }
+
     public Integer getProgramId() {
         return programId;
     }

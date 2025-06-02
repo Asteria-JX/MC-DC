@@ -26,9 +26,8 @@ public class ProgramController {
     private SourceCodeService sourceCodeService;
 
     @GetMapping("/all")
-    public List<Program> getAllPrograms() {
-        //System.out.println(programService.getAll());
-        return programService.getAll();
+    public List<Program> getAllPrograms(@RequestParam Integer userId) {
+        return programService.getAll(userId);
     }
 
     @PostMapping("/uploadProject")

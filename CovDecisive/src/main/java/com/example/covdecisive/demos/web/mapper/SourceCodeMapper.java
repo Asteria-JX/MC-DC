@@ -19,4 +19,11 @@ public interface SourceCodeMapper {
             @Result(property = "codeId", column = "code_id")
     })
     List<SourceCode> getByProgramId(int programId);
+
+    @Select("SELECT code_content FROM source_code WHERE program_id = #{programId} AND file_path = #{filePath}")
+    String selectCodeContent(@Param("programId") int programId, @Param("filePath") String filePath);
+
+    @Update("UPDATE source_code SET code_content = #{codeContent} WHERE program_id = #{programId} AND file_path = #{filePath}")
+    int updateCode(@Param("programId") int programId, @Param("filePath") String filePath, @Param("codeContent") String codeContent);
+
 }

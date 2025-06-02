@@ -2,15 +2,14 @@ package com.example.covdecisive.demos.web.controller;
 
 import com.example.covdecisive.demos.web.service.SourceCodeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import com.example.covdecisive.demos.web.model.SourceCode;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @Api(tags = "API接口")
@@ -28,5 +27,23 @@ public class SourceController {
         return list.stream().map(SourceCode::getFilePath).collect(Collectors.toList());
     }
 
+    // 获取指定 file_path 的代码内容
+    @ApiOperation("获取指定 file_path 的代码内容")
+    @GetMapping("/getCodeContent")
+    public String getCodeContent(
+            @RequestParam("programId") int programId,
+            @RequestParam("filePath") String filePath) {
+        String result = sourceCodeService.getCodeContent(programId, filePath);
+        System.out.println(result);
+        return result;
+    }
+
+    // 编辑修改代码内容
+    @ApiOperation("编辑修改代码内容")
+    @PostMapping("/updateCodeContent")
+    public String updateCodeContent(@RequestBody SourceCode request) {
+        int result = sourceCodeService.updateCodeContent(request.getProgramId(), request.getFilePath(), request.getCodeContent());
+        return result > 0 ? "success" : "fail";
+    }
 
 }

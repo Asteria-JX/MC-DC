@@ -18,4 +18,19 @@ public class SourceCodeService {
     public List<SourceCode> getByProgramId(int programId) {
         return sourceCodeMapper.getByProgramId(programId);
     }
+
+    public String getCodeContent(int programId, String filePath) {
+        return sourceCodeMapper.selectCodeContent(programId, filePath);
+    }
+
+    public int updateCodeContent(int programId, String filePath, String codeContent) {
+        return sourceCodeMapper.updateCode(programId, filePath, codeContent);
+    }
+
+
+
+
+
+
+
 }

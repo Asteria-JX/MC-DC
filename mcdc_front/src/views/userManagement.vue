@@ -204,11 +204,6 @@ export default defineComponent({
         dataIndex: 'username',
         width:'350'
       },
-      // { title: '密码',
-      //   dataIndex: 'password' ,
-      //   slotName:'password',
-      //   width:'250'
-      // },
       { title: '用户类型',
         dataIndex: 'usertype' ,
         slotName:'usertype',
@@ -223,7 +218,10 @@ export default defineComponent({
 
 
     //fetchData();
-    onMounted(fetchData);
+    onMounted(() => {
+      fetchData()
+    })
+
 
     //更改密码
     const username=ref(
